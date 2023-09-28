@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QR/바코드 스캔</string>
+
+    <string name="not_permission">카메라 권한이 없습니다.</string>
+</resources>
