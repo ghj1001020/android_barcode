@@ -29,11 +29,15 @@ import java.util.List;
 
 public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompatActivity {
 
+    public VB mBinding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BarcodeApp.setContext(this);
         BarcodeApp.setActivity(this);
+
+        mBinding = newBinding();
     }
 
     @Override
