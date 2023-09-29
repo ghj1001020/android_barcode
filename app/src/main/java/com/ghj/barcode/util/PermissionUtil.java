@@ -1,4 +1,4 @@
-package com.ghj.barcode.common;
+package com.ghj.barcode.util;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.ghj.barcode.BarcodeApp;
 
-public class Permission {
+public class PermissionUtil {
     // 필수권한 : 카메라
     public static String[] APP_NEED_PERMISSION = new String[] { Manifest.permission.CAMERA };
 

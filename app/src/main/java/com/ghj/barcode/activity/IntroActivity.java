@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import com.ghj.barcode.R;
-import com.ghj.barcode.common.Alert;
-import com.ghj.barcode.common.Permission;
 import com.ghj.barcode.databinding.ActivityIntroBinding;
 import com.ghj.barcode.define.Code;
+import com.ghj.barcode.util.AlertUtil;
 import com.ghj.barcode.util.AppUtil;
 import com.ghj.barcode.util.IntentUtil;
+import com.ghj.barcode.util.PermissionUtil;
 
 import java.util.List;
 
@@ -28,11 +28,11 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
         @Override
         public void onActivityResult(ActivityResult o) {
             if(o.getResultCode() == Activity.RESULT_OK) {
-                if(Permission.HasAppNeedPermission()) {
+                if(PermissionUtil.HasAppNeedPermission()) {
                     moveToMain();
                 }
                 else {
-                    Alert.alert(getString(R.string.not_permission), (dialog, which) -> {
+                    AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
                         AppUtil.AppClose();
                     });
                 }
@@ -45,11 +45,11 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(Permission.HasAppNeedPermission()) {
+        if(PermissionUtil.HasAppNeedPermission()) {
             moveToMain();
         }
         else {
-            Permission.RequestPermission(Permission.APP_NEED_PERMISSION, Code.PERMISSION.REQ_APP_NEED);
+            PermissionUtil.RequestPermission(PermissionUtil.APP_NEED_PERMISSION, Code.PERMISSION.REQ_APP_NEED);
         }
     }
 
@@ -76,7 +76,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
                     mPermissionCallBack.launch(it);
                 }
                 else {
-                    Alert.alert(getString(R.string.not_permission), (dialog, which) -> {
+                    AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
                         AppUtil.AppClose();
                     });
                 }

@@ -1,4 +1,4 @@
-package com.ghj.barcode.common;
+package com.ghj.barcode.util;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.ghj.barcode.BarcodeApp;
 
-public class Alert {
+public class AlertUtil {
 
     // alert
     public static AlertDialog alert(String message, DialogInterface.OnClickListener listener) {

@@ -1,28 +1,19 @@
 package com.ghj.barcode.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.app.ComponentActivity;
 import androidx.databinding.ViewDataBinding;
 
 import com.ghj.barcode.BarcodeApp;
 import com.ghj.barcode.R;
-import com.ghj.barcode.common.Alert;
-import com.ghj.barcode.common.Permission;
+import com.ghj.barcode.util.AlertUtil;
 import com.ghj.barcode.util.AppUtil;
-import com.ghj.barcode.util.IntentUtil;
+import com.ghj.barcode.util.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +39,8 @@ public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompat
 
         // 인트로가 아니면 카메라 권한체크
         if(!(this instanceof IntroActivity)) {
-            if(!Permission.HasAppNeedPermission()) {
-                Alert.alert(getString(R.string.not_permission), (dialog, which) -> {
+            if(!PermissionUtil.HasAppNeedPermission()) {
+                AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
                     AppUtil.AppClose();
                 });
             }
