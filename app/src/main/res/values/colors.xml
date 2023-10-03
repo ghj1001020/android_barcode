@@ -14,6 +14,7 @@
     <color name="text">#1F1F1F</color>
     <color name="tab_gray">#B4B4B3</color>
     <color name="tab_indicator">#3E54AC</color>
+    <color name="border">#EFEFEF</color>
 
 
 </resources>

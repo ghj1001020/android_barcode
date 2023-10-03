@@ -21,16 +21,23 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="DialogTitle" parent="BaseText">
+    <style name="TxtDialogTitle" parent="BaseText">
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="DialogMessage" parent="BaseText">
+    <style name="TxtDialogMessage" parent="BaseText">
         <item name="android:textSize">19dp</item>
         <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="TxtFileName" parent="BaseText">
+        <item name="android:textSize">13dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 

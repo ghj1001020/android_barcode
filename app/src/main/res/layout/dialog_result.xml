@@ -12,7 +12,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/bg_dialog">
+        android:background="@drawable/bg_c24_w0_white">
 
         <TextView
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:paddingTop="16dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            style="@style/DialogTitle"
+            style="@style/TxtDialogTitle"
             android:text="알림"
             android:visibility="gone"/>
 
@@ -38,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                style="@style/DialogMessage"
+                style="@style/TxtDialogMessage"
                 tools:text="1234567890"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                 android:text="복사"
                 android:layout_width="48dp"
                 android:layout_height="36dp"
-                android:background="@drawable/bg_btn"
+                android:background="@drawable/btn_plain"
                 style="@style/BtnPlan"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -70,7 +70,7 @@
                 android:id="@+id/btnOk"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_dialog_b"
+                android:background="@drawable/btn_dialog_ok"
                 style="@style/BtnDialog"
                 android:text="확인"/>
 
