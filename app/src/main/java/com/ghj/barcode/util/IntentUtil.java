@@ -16,7 +16,7 @@ import com.ghj.barcode.activity.BaseActivity;
 
 public class IntentUtil {
 
-    // 설정화면으로 이동
+    // 설정 화면으로 이동
     public static Intent OpenPermissionSetting() {
         try {
             return new Intent( Settings.ACTION_APPLICATION_DETAILS_SETTINGS ).setData( Uri.parse("package:" + BarcodeApp.getContext().getPackageName()) );
@@ -24,5 +24,12 @@ public class IntentUtil {
         catch( Exception e ) {
             return new Intent( Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS );
         }
+    }
+
+    // 갤러리선택 화면으로 이동
+    public static Intent OpenImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        return Intent.createChooser(intent, "이미지 선택");
     }
 }

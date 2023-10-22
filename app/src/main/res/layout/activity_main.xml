@@ -15,6 +15,7 @@
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@color/bgTabBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:tabTextAppearance="@style/TabItem"
         app:tabSelectedTextColor="@color/black"
