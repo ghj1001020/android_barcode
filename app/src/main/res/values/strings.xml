@@ -2,4 +2,6 @@
     <string name="app_name">QR/바코드 스캔</string>
 
     <string name="not_permission">카메라 권한이 없습니다.</string>
+    <string name="not_permission_setting">카메라 권한이 없습니다.\n설정 > 권한 화면에서 변경하시겠습니까?</string>
+
 </resources>

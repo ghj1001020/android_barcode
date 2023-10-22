@@ -1,16 +1,25 @@
 package com.ghj.barcode.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.ghj.barcode.R;
+import com.ghj.barcode.activity.BaseActivity;
 import com.ghj.barcode.activity.dialog.ResultDialog;
 import com.ghj.barcode.databinding.FragmentScanBinding;
+import com.ghj.barcode.define.Code;
+import com.ghj.barcode.util.AlertUtil;
+import com.ghj.barcode.util.AppUtil;
+import com.ghj.barcode.util.IntentUtil;
 import com.ghj.barcode.util.LogUtil;
 import com.ghj.barcode.util.PermissionUtil;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CaptureManager;
+
+import java.util.List;
 
 public class ScanFragment extends BaseFragment<FragmentScanBinding> {
 
@@ -26,6 +35,10 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding> {
     public void initFragment(Bundle bundle) {
         mBinding.scanner.setStatusText("");
         initScan();
+
+        if(!PermissionUtil.HasAppNeedPermission()) {
+            onRequestPermissions(PermissionUtil.APP_NEED_PERMISSION, Code.PERMISSION.REQ_APP_NEED);
+        }
     }
 
     public void initScan() {
@@ -48,10 +61,8 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding> {
     public void onResume() {
         super.onResume();
         LogUtil.d("onResume");
-        if(PermissionUtil.HasAppNeedPermission()) {
-            if(mCaptureManager != null) {
-                mCaptureManager.onResume();
-            }
+        if(mCaptureManager != null) {
+            mCaptureManager.onResume();
         }
     }
 
@@ -60,6 +71,17 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding> {
         super.onPause();
         if(mCaptureManager != null) {
             mCaptureManager.onPause();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, List<String> deniedPermission) {
+        if(requestCode == Code.PERMISSION.REQ_APP_NEED) {
+            if(deniedPermission.size() > 0) {
+                AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
+                    AppUtil.AppClose();
+                });
+            }
         }
     }
 }

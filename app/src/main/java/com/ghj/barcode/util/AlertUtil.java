@@ -36,7 +36,10 @@ public class AlertUtil {
     }
 
     // confirm
-    public AlertDialog confirm(String title, String message, String positiveText, String negativeText, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+    public static AlertDialog confirm(String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+        return confirm("", message, "확인", "취소", positiveListener, negativeListener);
+    }
+    public static AlertDialog confirm(String title, String message, String positiveText, String negativeText, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(BarcodeApp.getContext());
         if(!TextUtils.isEmpty(title)) {
             builder.setTitle(title);

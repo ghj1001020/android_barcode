@@ -1,8 +1,14 @@
 package com.ghj.barcode.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +23,35 @@ import com.ghj.barcode.util.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompatActivity {
+
+    // 액티비티 요청
+    private int mReqCodeActivity = 0;
+    private ActivityResultLauncher<Intent> mActivityLauncher =  registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            onRequestActivityResult(mReqCodeActivity, o.getResultCode(), o.getData());
+        }
+    });
+
+    // 권한
+    private int mReqCodePermission = 0;
+    private ActivityResultLauncher<String[]> mPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+        @Override
+        public void onActivityResult(Map<String, Boolean> result) {
+            if(result.size() == 0) return;
+
+            List<String> deniedPermission = new ArrayList<>();
+            for (String key : result.keySet()) {
+                if(!result.get(key)) {
+                    deniedPermission.add(key);
+                }
+            }
+            onRequestPermissionsResult(mReqCodePermission, deniedPermission);
+        }
+    });
 
     public VB mBinding;
 
@@ -27,7 +60,6 @@ public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompat
         super.onCreate(savedInstanceState);
         BarcodeApp.setContext(this);
         BarcodeApp.setActivity(this);
-
         mBinding = newBinding();
     }
 
@@ -36,38 +68,27 @@ public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompat
         super.onResume();
         BarcodeApp.setContext(this);
         BarcodeApp.setActivity(this);
-
-        // 인트로가 아니면 카메라 권한체크
-        if(!(this instanceof IntroActivity)) {
-            if(!PermissionUtil.HasAppNeedPermission()) {
-                AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
-                    AppUtil.AppClose();
-                });
-            }
-        }
     }
 
     // 뷰바인딩
     public abstract VB newBinding();
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        List<String> deniedPermission = new ArrayList<>();
-        boolean isRationale = false;
-        for (int i=0; i<grantResults.length; i++) {
-            if(grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                deniedPermission.add(permissions[i]);
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])) {
-                    isRationale = true;
-                }
-            }
-        }
-
-        onRequestPermissionsResult(requestCode, deniedPermission, isRationale);
+    // 액티비티 요청 콜백
+    public void onRequestActivity(Intent intent) {
+        onRequestActivity(0, intent);
     }
+    public void onRequestActivity(int requestCode, Intent intent) {
+        mReqCodeActivity = requestCode;
+        mActivityLauncher.launch(intent);
+    }
+    public void onRequestActivityResult(int requestCode, int resultCode, Intent data) {}
 
-    // 권한결과 콜백
-    public void onRequestPermissionsResult(int requestCode, List<String> deniedPermission, boolean isRationale) {}
+    // 권한 요청 콜백
+    public void onRequestPermissions(String[] permission, int requestCode) {
+        if(permission == null || permission.length == 0) return;
+
+        mReqCodePermission = requestCode;
+        mPermissionLauncher.launch(permission);
+    }
+    public void onRequestPermissionsResult(int requestCode, List<String> deniedPermission) {}
 }

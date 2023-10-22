@@ -3,13 +3,21 @@ package com.ghj.barcode.util;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
+import androidx.activity.ComponentActivity;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.ghj.barcode.BarcodeApp;
 
+import java.util.Map;
+
 public class PermissionUtil {
+
     // 필수권한 : 카메라
     public static String[] APP_NEED_PERMISSION = new String[] { Manifest.permission.CAMERA };
 
@@ -30,14 +38,5 @@ public class PermissionUtil {
             }
         }
         return result;
-    }
-
-    // 권한요청
-    public static void RequestPermission(String[] permission, int requestCode) {
-        if(permission == null || permission.length == 0 || BarcodeApp.getActivity() == null || BarcodeApp.getActivity().isDestroyed()) {
-            return;
-        }
-
-        ActivityCompat.requestPermissions(BarcodeApp.getActivity(), permission, requestCode);
     }
 }

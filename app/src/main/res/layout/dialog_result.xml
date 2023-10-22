@@ -51,7 +51,7 @@
                 android:layout_width="48dp"
                 android:layout_height="36dp"
                 android:background="@drawable/btn_plain"
-                style="@style/BtnPlan"
+                style="@style/BtnPlain"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

@@ -29,7 +29,8 @@
             android:exported="true"
             android:label="@string/app_name"
             android:configChanges=""
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

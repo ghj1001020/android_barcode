@@ -23,24 +23,6 @@ import java.util.List;
 
 public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
 
-    // 권한설정 화면 콜백
-    ActivityResultLauncher<Intent> mPermissionCallBack =  registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult o) {
-            if(o.getResultCode() == Activity.RESULT_OK) {
-                if(PermissionUtil.HasAppNeedPermission()) {
-                    moveToMain();
-                }
-                else {
-                    AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
-                        AppUtil.AppClose();
-                    });
-                }
-            }
-        }
-    });
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +31,7 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
             moveToMain();
         }
         else {
-            PermissionUtil.RequestPermission(PermissionUtil.APP_NEED_PERMISSION, Code.PERMISSION.REQ_APP_NEED);
+            onRequestPermissions(PermissionUtil.APP_NEED_PERMISSION, Code.PERMISSION.REQ_APP_NEED);
         }
     }
 
@@ -64,22 +46,33 @@ public class IntroActivity extends BaseActivity<ActivityIntroBinding> {
         finish();
     }
 
+    // 액티비티 콜백
     @Override
-    public void onRequestPermissionsResult(int requestCode, List<String> deniedPermission, boolean isRationale) {
+    public void onRequestActivityResult(int requestCode, int resultCode, Intent data) {
+        if(PermissionUtil.HasAppNeedPermission()) {
+            moveToMain();
+        }
+        else {
+            AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
+                AppUtil.AppClose();
+            });
+        }
+    }
+
+    // 권한 콜백
+    @Override
+    public void onRequestPermissionsResult(int requestCode, List<String> deniedPermission) {
         if(requestCode == Code.PERMISSION.REQ_APP_NEED) {
             if(deniedPermission.size() == 0) {
                 moveToMain();
             }
             else {
-                if(isRationale) {
+                AlertUtil.confirm(getString(R.string.not_permission_setting), (dialog, which) -> {
                     Intent it = IntentUtil.OpenPermissionSetting();
-                    mPermissionCallBack.launch(it);
-                }
-                else {
-                    AlertUtil.alert(getString(R.string.not_permission), (dialog, which) -> {
-                        AppUtil.AppClose();
-                    });
-                }
+                    onRequestActivity(it);
+                }, ((dialog, which) -> {
+                    AppUtil.AppClose();
+                }));
             }
         }
     }

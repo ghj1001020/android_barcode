@@ -61,7 +61,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:background="@drawable/btn_plain"
-            style="@style/BtnPlan" />
+            style="@style/BtnPlain" />
 
     </LinearLayout>
 
