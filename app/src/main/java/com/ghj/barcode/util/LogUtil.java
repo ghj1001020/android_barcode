@@ -10,7 +10,7 @@ public class LogUtil {
     private static final int LEVEL_ERROR = 1;
 
     public static void d(String msg) {
-        printLog(LEVEL_DEBUG, "MPLog", msg);
+        printLog(LEVEL_DEBUG, "BarcodeLog", msg);
     }
 
     public static void d(String tag, String msg) {
