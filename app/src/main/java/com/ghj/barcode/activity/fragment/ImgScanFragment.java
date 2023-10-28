@@ -16,6 +16,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import com.ghj.barcode.R;
 import com.ghj.barcode.databinding.FragmentImgscanBinding;
+import com.ghj.barcode.sqlite.YJSQLiteService;
 import com.ghj.barcode.util.ClipboardUtil;
 import com.ghj.barcode.util.FileUtil;
 import com.ghj.barcode.util.IntentUtil;
@@ -77,6 +78,8 @@ public class ImgScanFragment extends BaseFragment<FragmentImgscanBinding> {
                 mBarcode = getQRCodeText(uri);
                 mBinding.image.setImageURI(uri);
                 mBinding.txtMsg.setText(mBarcode);
+
+                YJSQLiteService.InsertHistory(mBarcode);
             }
             catch (Exception e) {
                 e.printStackTrace();

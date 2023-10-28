@@ -5,16 +5,17 @@ import android.database.Cursor;
 import com.ghj.barcode.BarcodeApp;
 import com.ghj.barcode.data.HistoryData;
 import com.ghj.barcode.define.SQLQuery;
+import com.ghj.barcode.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class YJSQLiteService {
 
-    public static void InsertHistory(String date, String value) {
+    public static void InsertHistory(String value) {
         if(BarcodeApp.getContext() == null) return;
 
-        String[] params = new String[]{date, value};
+        String[] params = new String[]{DateUtil.Today("yyyy-MM-dd HH:mm:ss"), value};
         YJSQLite.getInstance(BarcodeApp.getContext()).execSQL(SQLQuery.INSERT_HISTORY, params);
         YJSQLite.getInstance(BarcodeApp.getContext()).close();
     }

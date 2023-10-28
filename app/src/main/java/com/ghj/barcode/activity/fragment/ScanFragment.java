@@ -10,6 +10,7 @@ import com.ghj.barcode.activity.BaseActivity;
 import com.ghj.barcode.activity.dialog.ResultDialog;
 import com.ghj.barcode.databinding.FragmentScanBinding;
 import com.ghj.barcode.define.Code;
+import com.ghj.barcode.sqlite.YJSQLiteService;
 import com.ghj.barcode.util.AlertUtil;
 import com.ghj.barcode.util.AppUtil;
 import com.ghj.barcode.util.IntentUtil;
@@ -46,7 +47,7 @@ public class ScanFragment extends BaseFragment<FragmentScanBinding> {
             @Override
             public void barcodeResult(BarcodeResult result) {
                 mBinding.scanner.pause();
-                LogUtil.d("결과 " + result.toString());
+                YJSQLiteService.InsertHistory(result.toString());
                 ResultDialog dialog = new ResultDialog(result.toString(), btnType -> {
                     initScan();
                     mBinding.scanner.resume();
